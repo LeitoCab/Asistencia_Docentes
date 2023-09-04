@@ -16,6 +16,7 @@ class Curso {
   const Curso(this.curso, this.inicio, this.fin, this.aula);
 }
 
+// ignore: unused_element
 List<Curso> _filteredCursos = [];
 
 class _HorarioPageState extends State<HorarioPage> {

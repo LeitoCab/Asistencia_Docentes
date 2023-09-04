@@ -1,4 +1,5 @@
 import 'package:asistencia_de_docentes/homepage/drawer_home.dart';
+import 'package:asistencia_de_docentes/tabbar/asistencia.dart';
 import 'package:asistencia_de_docentes/tabbar/horario.dart';
 import 'package:flutter/material.dart';
 
@@ -31,19 +32,81 @@ class _HomePageState extends State<HomePage> {
         ),
         drawer: Drawer(
           child: SafeArea(
-            child: ListView(
+            child: Column(
               children: <Widget>[
-                const CircleAvatarDrawer(),
-                ListTile(
-                  title: const Text("Datos del docente"),
-                  onTap: () {},
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      const CircleAvatarDrawer(),
+                      const Divider(),
+                      ExpansionTile(
+                        leading: const Icon(Icons.person),
+                        title: const Text("Datos"),
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.account_circle),
+                              title: const Text('Nombre: Juan Pérez'),
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.mail_outline),
+                              title:
+                                  const Text('Email: juan.perez@example.com'),
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.phone),
+                              title: const Text('Teléfono: +123456789'),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      ExpansionTile(
+                        leading: const Icon(Icons.info_outline),
+                        title: const Text("Acerca de Nosotros"),
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.mail),
+                              title: const Text("Correo Electrónico"),
+                              subtitle: const Text("soporte@unap.edu"),
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.phone),
+                              title: const Text("Teléfono"),
+                              subtitle: const Text("921 899 332"),
+                              onTap: () {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Divider(),
+                      ListTile(
+                        leading: const Icon(Icons.exit_to_app),
+                        title: const Text("Cerrar sesión"),
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.login);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                ListTile(
-                  title: const Text("Cerrar sesión"),
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.login);
-                  },
-                )
               ],
             ),
           ),
@@ -51,7 +114,7 @@ class _HomePageState extends State<HomePage> {
         body: const TabBarView(
           children: [
             Center(
-              child: Text("Contenido de la pestaña 1"),
+              child: BuildCoursesList(),
             ),
             Center(
               child: HorarioPage(),

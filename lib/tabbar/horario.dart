@@ -13,7 +13,8 @@ class Curso {
   final String inicio;
   final String fin;
   final String aula;
-  const Curso(this.curso, this.inicio, this.fin, this.aula);
+  final int dia; // 1 = Lunes, 2 = Martes, ..., 7 = Domingo
+  const Curso(this.curso, this.inicio, this.fin, this.aula, this.dia);
 }
 
 List<Curso> _filteredCursos = [];
@@ -24,11 +25,14 @@ class _HorarioPageState extends State<HorarioPage> {
   DateTime? _selectedDay;
   DateTime kFirstDay = DateTime.utc(2023, 1, 1);
   DateTime kLastDay = DateTime.utc(2024, 12, 31);
+
   List<Curso> cursos = [
-    const Curso('Seminario de tesis I', '19:00', '23:00', 'Laboratorio Moore'),
-    const Curso('Gestion de TI', '19:00', '23:00', 'Aula 04'),
-    const Curso('Peritaje informatico', '19:00', '23:00', 'Aula 04'),
-    const Curso('Taller de software 2', '19:00', '23:00', 'Aula 04')
+    const Curso(
+        'Seminario de tesis I', '18:00', '22:00', 'Laboratorio Moore', 1),
+    const Curso('Gestion de TI', '19:00', '23:00', 'Aula 04', 1),
+    const Curso('Peritaje informatico', '15:00', '17:00', 'Aula 03', 1),
+    const Curso('Taller de software 2', '12:00', '14:00', 'Aula 02', 1),
+    // Añade otros cursos para otros días si lo deseas
   ];
 
   @override
@@ -46,47 +50,30 @@ class _HorarioPageState extends State<HorarioPage> {
             },
             onDaySelected: (selectedDay, focusedDay) {
               if (!isSameDay(_selectedDay, selectedDay)) {
-                // Call `setState()` when updating the selected day
                 setState(() {
                   _selectedDay = selectedDay;
                   _focusedDay = focusedDay;
                 });
-                if (_selectedDay!.weekday == DateTime.monday) {
-                  _filteredCursos = cursos
-                      .where((curso) =>
-                          curso.inicio == "19:00" && curso.fin == "23:00")
-                      .toList();
-                } else {
-                  _filteredCursos = [];
-                }
+                _filteredCursos = cursos
+                    .where((curso) => curso.dia == _selectedDay!.weekday)
+                    .toList();
               }
             },
             onFormatChanged: (format) {
               if (_calendarFormat != format) {
-                // Call `setState()` when updating calendar format
                 setState(() {
                   _calendarFormat = format;
                 });
               }
             },
             onPageChanged: (focusedDay) {
-              // No need to call `setState()` here
               _focusedDay = focusedDay;
             },
-            eventLoader: (day) {
-              if (day.weekday == DateTime.monday) {
-                return [
-                  const Curso('Seminario de tesis I', '19:00', '23:00',
-                      'Laboratorio Moore'),
-                  const Curso('Gestion de TI', '19:00', '23:00', 'Aula 04'),
-                ];
-              }
-              return [];
-            },
+            // La siguiente función ahora sólo devuelve una lista vacía, porque no estamos usando eventos en el calendario.
+            // Si deseas mostrar eventos en los días del calendario, deberías modificar esta función.
+            eventLoader: (day) => [],
           ),
-          const SizedBox(
-            width: 16,
-          ),
+          const SizedBox(height: 16),
           _buildEventList()
         ],
       ),
@@ -94,26 +81,30 @@ class _HorarioPageState extends State<HorarioPage> {
   }
 
   Widget _buildEventList() {
-    if (cursos.isEmpty) {
+    if (_filteredCursos.isEmpty) {
       return const Center(
         child: Text('No hay cursos'),
       );
     }
-    return ListView(
-      children: cursos.map((curso) {
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 0.8),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-          child: ListTile(
-            title: Text("Curso: "),
-            subtitle: Text(curso.aula),
-            trailing: Text(curso.inicio + ' - ' + curso.fin),
-          ),
-        );
-      }).toList(),
+    return Expanded(
+      child: ListView.builder(
+        itemCount: _filteredCursos.length,
+        itemBuilder: (context, index) {
+          Curso curso = _filteredCursos[index];
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(width: 0.8),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+            child: ListTile(
+              title: Text(curso.curso),
+              subtitle: Text(curso.aula),
+              trailing: Text(curso.inicio + ' - ' + curso.fin),
+            ),
+          );
+        },
+      ),
     );
   }
 }

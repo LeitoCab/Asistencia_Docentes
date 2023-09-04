@@ -15,11 +15,14 @@ class _CircleAvatarDrawerState extends State<CircleAvatarDrawer> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _buildUserAvatar(),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            _buildUserAvatar(),
+          ],
+        ),
       ),
     );
   }

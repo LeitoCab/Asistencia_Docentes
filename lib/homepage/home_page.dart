@@ -1,6 +1,7 @@
 import 'package:asistencia_de_docentes/homepage/drawer_home.dart';
 import 'package:asistencia_de_docentes/tabbar/horario.dart';
 import 'package:flutter/material.dart';
+import 'package:asistencia_de_docentes/tabbar/asistencia.dart';
 
 import '../routes/routes_config.dart';
 
@@ -50,12 +51,8 @@ class _HomePageState extends State<HomePage> {
         ),
         body: const TabBarView(
           children: [
-            Center(
-              child: Text("Contenido de la pestaña 1"),
-            ),
-            Center(
-              child: HorarioPage(),
-            ),
+            BuildCoursesList(), // Asumiendo que este widget ya está definido
+            HorarioPage(), // Aquí puedes agregar otro widget para 'Horario'
           ],
         ),
       ),

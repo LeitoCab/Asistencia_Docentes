@@ -30,48 +30,51 @@ class _BuildCoursesListState extends State<BuildCoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      itemCount: cursos.length,
-      itemBuilder: (context, index) {
-        return SizedBox(
-          height: 70.0,
-          child: Slidable(
-            actionPane: const SlidableDrawerActionPane(),
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                caption: 'Asistió',
-                color: Colors.green,
-                icon: Icons.check,
-                onTap: () => _setAttendanceStatus(index, 'Asistió'),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.separated(
+        itemCount: cursos.length,
+        itemBuilder: (context, index) {
+          return SizedBox(
+            height: 70.0,
+            child: Slidable(
+              actionPane: const SlidableDrawerActionPane(),
+              secondaryActions: <Widget>[
+                IconSlideAction(
+                  caption: 'Asistió',
+                  color: Colors.green,
+                  icon: Icons.check,
+                  onTap: () => _setAttendanceStatus(index, 'Asistió'),
+                ),
+                IconSlideAction(
+                  caption: 'Tardanza',
+                  color: Colors.orange,
+                  icon: Icons.access_time,
+                  onTap: () => _setAttendanceStatus(index, 'Tardanza'),
+                ),
+                IconSlideAction(
+                  caption: 'Faltó',
+                  color: Colors.red,
+                  icon: Icons.close,
+                  onTap: () => _setAttendanceStatus(index, 'Faltó'),
+                ),
+              ],
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cursos[index].color,
+                ),
+                onPressed: () {
+                  // Acción del botón al presionarlo (si es necesario)
+                },
+                child: Text(cursos[index].nombre),
               ),
-              IconSlideAction(
-                caption: 'Tardanza',
-                color: Colors.orange,
-                icon: Icons.access_time,
-                onTap: () => _setAttendanceStatus(index, 'Tardanza'),
-              ),
-              IconSlideAction(
-                caption: 'Faltó',
-                color: Colors.red,
-                icon: Icons.close,
-                onTap: () => _setAttendanceStatus(index, 'Faltó'),
-              ),
-            ],
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: cursos[index].color,
-              ),
-              onPressed: () {
-                // Acción del botón al presionarlo (si es necesario)
-              },
-              child: Text(cursos[index].nombre),
             ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return const SizedBox(height: 15.0); // Espacio entre las filas
-      },
+          );
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 15.0); // Espacio entre las filas
+        },
+      ),
     );
   }
 

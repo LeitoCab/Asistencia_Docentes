@@ -27,12 +27,18 @@ class _HorarioPageState extends State<HorarioPage> {
   DateTime kFirstDay = DateTime.utc(2023, 1, 1);
   DateTime kLastDay = DateTime.utc(2024, 12, 31);
 
-  List<Curso> cursos = [
+  List<Curso> monday = [
     const Curso(
         'Seminario de tesis I', '18:00', '22:00', 'Laboratorio Moore', 1),
     const Curso('Gestion de TI', '19:00', '23:00', 'Aula 04', 1),
     const Curso('Peritaje informatico', '15:00', '17:00', 'Aula 03', 1),
     const Curso('Taller de software 2', '12:00', '14:00', 'Aula 02', 1),
+    // Añade otros cursos para otros días si lo deseas
+  ];
+  List<Curso> tuesday = [
+    const Curso('Arquitectura', '16:00', '18:00', 'Laboratorio Moore', 2),
+    const Curso('Actividad', '18:00', '23:00', 'Aula 04', 2),
+
     // Añade otros cursos para otros días si lo deseas
   ];
 
@@ -42,38 +48,37 @@ class _HorarioPageState extends State<HorarioPage> {
       body: Column(
         children: [
           TableCalendar(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            calendarFormat: _calendarFormat,
-            selectedDayPredicate: (day) {
-              return isSameDay(_selectedDay, day);
-            },
-            onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(_selectedDay, selectedDay)) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                });
-                _filteredCursos = cursos
-                    .where((curso) => curso.dia == _selectedDay!.weekday)
-                    .toList();
-              }
-            },
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            // La siguiente función ahora sólo devuelve una lista vacía, porque no estamos usando eventos en el calendario.
-            // Si deseas mostrar eventos en los días del calendario, deberías modificar esta función.
-            eventLoader: (day) => [],
-          ),
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              focusedDay: _focusedDay,
+              calendarFormat: _calendarFormat,
+              selectedDayPredicate: (day) {
+                return isSameDay(_selectedDay, day);
+              },
+              onDaySelected: (selectedDay, focusedDay) {
+                if (!isSameDay(_selectedDay, selectedDay)) {
+                  setState(() {
+                    _selectedDay = selectedDay;
+                    _focusedDay = focusedDay;
+                  });
+                  _filteredCursos = monday
+                      .where((curso) => curso.dia == _selectedDay!.weekday)
+                      .toList();
+                }
+              },
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              // La siguiente función ahora sólo devuelve una lista vacía, porque no estamos usando eventos en el calendario.
+              // Si deseas mostrar eventos en los días del calendario, deberías modificar esta función.
+              eventLoader: (day) => []),
           const SizedBox(height: 16),
           _buildEventList()
         ],

@@ -48,7 +48,23 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 16.0),
                             child: ListTile(
                               leading: const Icon(Icons.account_circle),
-                              title: const Text('Nombre: Juan Pérez'),
+                              title: const Text('Nombre: '),
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.account_circle),
+                              title: const Text('Apellido Paterno: '),
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: ListTile(
+                              leading: const Icon(Icons.account_circle),
+                              title: const Text('Apellido Materno: '),
                               onTap: () {},
                             ),
                           ),
@@ -56,19 +72,11 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.only(left: 16.0),
                             child: ListTile(
                               leading: const Icon(Icons.mail_outline),
-                              title:
-                                  const Text('Email: juan.perez@example.com'),
+                              title: const Text('Email: '),
                               onTap: () {},
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: ListTile(
-                              leading: const Icon(Icons.phone),
-                              title: const Text('Teléfono: +123456789'),
-                              onTap: () {},
-                            ),
-                          ),
+                          // Puedes añadir más campos relacionados con el usuario aquí
                         ],
                       ),
                       const Divider(),
@@ -81,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                             child: ListTile(
                               leading: const Icon(Icons.mail),
                               title: const Text("Correo Electrónico"),
-                              subtitle: const Text("soporte@unap.edu"),
+                              subtitle: const Text("kfkevin@gmail.com"),
                               onTap: () {},
                             ),
                           ),

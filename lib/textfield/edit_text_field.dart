@@ -8,6 +8,7 @@ class EditTextField extends StatelessWidget {
     this.onChanged,
     this.validator,
     required this.labeltext,
+    this.controller, // Agrega esto
   }) : super(key: key);
 
   final String hintText;
@@ -15,10 +16,12 @@ class EditTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final String? Function(String?)? validator;
   final String labeltext;
+  final TextEditingController? controller; // Agrega esto
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller, // Y esto
       onChanged: onChanged,
       validator: validator,
       decoration: InputDecoration(
